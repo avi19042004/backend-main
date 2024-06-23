@@ -15,7 +15,7 @@ mongoose.connect("mongodb+srv://avi19042004:Avi1904@cluster0.jargvng.mongodb.net
 
 //API create
 
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
     res.send("Express App is Running")
 })
 
@@ -37,6 +37,7 @@ app.post("/upload", upload.array('product', 4), (req, res) => {
         image_urls: fileNames
     });
 });
+
 //create schema for product
 const Product = mongoose.model("Product", {
     id: {
@@ -61,6 +62,14 @@ const Product = mongoose.model("Product", {
     },
     old_price: {
         type: Number,
+        required: true,
+    },
+    short_description: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
         required: true,
     },
     date: {
@@ -92,6 +101,8 @@ app.post("/addproduct", async (req, res) => {
         category: req.body.category,
         new_price: req.body.new_price,
         old_price: req.body.old_price,
+        short_description: req.body.short_description,
+        description: req.body.description,
     });
 
     await product.save();
@@ -100,7 +111,6 @@ app.post("/addproduct", async (req, res) => {
         name: req.body.name,
     });
 });
-
 
 //api for deleting product
 app.post("/removeproduct",async (req,res)=> {
